@@ -1,0 +1,260 @@
+@font-face {
+    font-family: 'Karnak Condensed';
+    font-style: normal;
+    font-weight: 700;
+    src: url("assets/fonts/karnakcondensed.woff2") format('woff2');
+}
+
+:root {
+    --color-correct: rgb(106, 170, 100);
+    --color-present: rgb(201, 180, 88);
+    --color-absent: rgb(120, 124, 126);
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Roboto', sans-serif;
+}
+
+.animate-pop {
+    animation-name: pop;
+    animation-duration: 100ms;
+}
+
+.animate-bounce {
+    animation-name: bounce !important;
+    animation-duration: 1000ms !important;
+}
+
+.container {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    background-color: white;
+}
+
+.header {
+    height: 50px;
+    background-color: white;
+    border-bottom: 1px solid rgb(211, 214, 218);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
+.header h4 {
+    all: unset;
+    font-family: 'Karnak Condensed';
+    font-weight: 700;
+    font-size: 37px;
+}
+
+.header > div {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+#message {
+    position: absolute;
+    top: 60px;
+    right: 10px;
+    opacity: 0;
+    padding: 15px 25px;
+    color: #334155;
+    font-size: 12px;
+    background-color: white;
+    border-radius: 4px;
+    box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;
+    transition: opacity 300ms ease;
+}
+
+.grid {
+    margin: 15px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+}
+
+.grid > div {
+    display: flex;
+    gap: 5px;
+}
+
+.grid > div div {
+    height: 9vh;
+    width: 9vh;
+    border: 2px solid #d3d6da;
+    box-sizing: border-box;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 4.5vh;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 700;
+    color: #334155;
+    background-color: white;
+}
+
+.dashed-box {
+    border-color: #a5b4fc !important;
+}
+
+.complete-row div {
+    color: white !important;
+    border: 2px solid #c084fc !important;
+    background-color: #a855f7 !important;
+}
+
+.green-card {
+    color: white !important;
+    border: 2px solid var(--color-correct) !important;
+    background-color: var(--color-correct) !important;
+    animation: 500ms flip ease-in;
+}
+
+.yellow-card {
+    color: white !important;
+    border: 2px solid var(--color-present) !important;
+    background-color: var(--color-present) !important;
+    animation: 500ms flip ease-in;
+}
+
+.grey-card {
+    color: white !important;
+    border: 2px solid var(--color-absent) !important;
+    background-color: var(--color-absent) !important;
+    animation: 500ms flip ease-in;
+}
+
+.keyboard {
+    padding-top: 10px;
+    padding-bottom: 10px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+    width: 700px;
+    margin-inline: auto;
+}
+
+.keyboard button {
+    all: unset;
+    padding: 8px 14px;
+    background-color: white;
+    font-family: 'Roboto', sans-serif;
+    font-weight: bold;
+    color: #334155;
+    border-radius: 4px;
+    border: 3px solid transparent;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+
+.keyboard button:hover {
+    background-color: #e2e8f0;
+    border: 3px solid #e2e8f0;
+    cursor: pointer;
+    box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 3px, rgba(0, 0, 0, 0.24) 0px 1px 2px;
+}
+
+.keyboard button:nth-child(12) {
+    margin-left: 55px;
+}
+
+.keyboard button:nth-child(21) {
+    margin-right: 55px;
+}
+
+.keyboard > button.animate-click {
+    background-color: #a5b4fc;
+    box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+    animation: 200ms click;
+}
+
+.keyboard-grey {
+    color: white !important;
+    background-color: var(--color-absent) !important;
+}
+
+.keyboard-yellow {
+    color: white !important;
+    background-color: var(--color-present) !important;
+}
+
+.keyboard-green {
+    color: white !important;
+    background-color: var(--color-correct) !important;
+}
+
+@keyframes pop {
+    from {
+      transform: scale(0.8);
+      opacity: 0;
+    }
+
+    40% {
+      transform: scale(1.1);
+      opacity: 1;
+    }
+}
+
+@keyframes click {
+    to {
+        transform: scale(0.95);
+    }
+}
+
+@keyframes flip {
+    0% {
+      transform: rotateX(0);
+    }
+    50% {
+      transform: rotateX(-90deg);
+    }
+    100% {
+      transform: rotateX(0);
+    }
+}
+
+@keyframes bounce {
+    0%, 20% {
+        transform: translateY(0);
+    }
+    40% {
+        transform: translateY(-30px);
+    }
+    50% {
+        transform: translateY(5px);
+    }
+    60% {
+        transform: translateY(-15px);
+    }
+    80% {
+        transform: translateY(2px);
+    }
+    100% {
+        transform: translateY(0);
+    }
+}
+
+@keyframes Shake {
+    10%, 90% {
+        transform: translateX(-1px);
+    }
+
+    20%, 80% {
+        transform: translateX(2px);
+    }
+
+    30%, 50%, 70% {
+        transform: translateX(-4px);
+    }
+
+    40%, 60% {
+        transform: translateX(4px);
+    }
+}
