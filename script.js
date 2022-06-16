@@ -18,7 +18,7 @@ const letter_grid = [
 
 let current_row = 0, current_grid = 0, game_over = false
 
-let pause_game = false
+let pause_game = true
 
 let guess
 
@@ -216,4 +216,11 @@ document.addEventListener('keydown', (event) => {
     }
 })
 
+const welcome_screen = document.querySelector('.instructions-container')
+
+// Hide instructions and start game
+welcome_screen.addEventListener('click', () => {
+    pause_game = false
+    welcome_screen.style.display = 'none'
+})
 

@@ -190,6 +190,92 @@ body {
     background-color: var(--color-correct) !important;
 }
 
+.instructions-container {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    background-color: rgba(255, 255, 255, 0.5);
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.instructions {
+    position: relative;
+    padding: 16px;
+    font-size: 14px;
+    border-radius: 8px;
+    border: 1px solid rgb(246, 247, 248);
+    background-color: white;
+    box-shadow: 0 4px 23px 0 rgb(0 0 0 / 20%);
+    max-width: 500px;
+    max-height: 90%;
+    box-sizing: border-box;
+    overflow-y: auto;
+}
+
+.instructions .close-icon {
+    position: absolute;
+    top: 15px;
+    right: 40px;
+    user-select: none;
+    cursor: pointer;
+}
+
+.close-icon svg {
+    position: fixed;
+}
+
+.instructions .examples {
+    border-top: 1px solid rgb(211, 214, 218);
+    border-bottom: 1px solid rgb(211, 214, 218);
+}
+
+.examples .example {
+    margin: 24px 0px;
+}
+
+.example-row {
+    display: flex;
+    gap: 4px;
+}
+
+.example-row > div {
+    width: 40px;
+    height: 40px;
+    font-size: calc(10px + 1.5vh);
+    font-weight: 700;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 2px solid rgb(135, 138, 140);
+    box-sizing: border-box;
+    user-select: none;
+}
+
+.example-row .example-correct {
+    color: white;
+    border-color: var(--color-correct);
+    background-color: var(--color-correct);
+    animation: 500ms flip ease-in;
+}
+
+.example-row .example-present {
+    color: white;
+    border-color: var(--color-present);
+    background-color: var(--color-present);
+    animation: 500ms flip ease-in;
+}
+
+.example-row .example-absent {
+    color: white;
+    border-color: var(--color-absent);
+    background-color: var(--color-absent);
+    animation: 500ms flip ease-in;
+}
+
 @keyframes pop {
     from {
       transform: scale(0.8);
