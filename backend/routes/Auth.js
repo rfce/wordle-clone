@@ -5,7 +5,8 @@ const router = express.Router()
 const User = require('../models/User')
 
 // @route - /register
-// @function - register a new user in db
+// @method - get
+// @function - register a new user in database
 router.get('/register', async (req, res) => {
     const user_ip = req.ip
     const user_data = await User.find({

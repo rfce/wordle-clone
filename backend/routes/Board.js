@@ -1,8 +1,108 @@
 const User = require('../models/User')
 const Wordle = require('../models/Wordle')
 
+const axios = require('axios')
 const express = require('express')
 const router = express.Router()
+
+// @route - /board/fetch?id=1ec9cac8-e1c4-4ffe-5bec-4ea4f5e03022
+// @method - get
+// @function - evaluates board of native users
+router.get('/fetch', async (req, res) => {
+    const client_id = req.query.id
+
+    if (client_id === undefined) {
+        return res.status(400).json({
+            success: false,
+            message: 'Required feild id is missing.'
+        })
+    }
+
+    const user_data = await User.find({
+        user: client_id
+    })
+
+    // User not found
+    if (user_data.length == 0) {
+        return res.status(400).json({
+            success: false,
+            message: 'User not found for provided id.'
+        })
+    }
+
+    const user_id = user_data[0].user
+    const prev_board = user_data[0].board
+    const prev_state = user_data[0].state
+
+    // June 30, 2022
+    const today  = new Date()
+    const updated = today.toLocaleDateString("en-US", {
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric'
+    })
+
+    // Playing game same day
+    if (user_data[0].updated == updated) {
+        // Get today's wordle
+        const wordle_info = await Wordle.find({
+            updated
+        })
+
+        const wordle = wordle_info.length && wordle_info[0].wordle
+
+        // Evaluate prev board
+        const evaluation = prev_board.map(row => {
+            return row.map((letter, index) => {
+                if (letter) {
+                    if (letter == wordle[index]) {
+                        return 'correct'
+                    }
+                    else if (wordle.includes(letter)) {
+                        return 'present'
+                    }
+                    else {
+                        return 'absent'
+                    }
+                } else {
+                    return null
+                }
+            })
+        })
+
+        res.json({
+            success: true,
+            message: null,
+            id: user_id,
+            board: prev_board,
+            evaluation: evaluation,
+            state: prev_state
+        })
+    } else {
+        const empty_board = Array(6).fill(Array(5).fill(''))
+
+        res.json({
+            success: true,
+            message: "Best of luck for today's wordle.",
+            id: user_id,
+            board: empty_board,
+            evaluation: Array(6).fill(Array(5).fill(null)),
+            state: "running"
+        })
+
+        // Reset user board and state
+        await User.findByIdAndUpdate(
+            user_data[0]._id,
+            {
+                ip: req.ip,
+                board: empty_board,
+                state: "running",
+                updated: updated
+            }
+        )
+    }
+
+})
 
 // @route - /board/verify
 // @method - post
@@ -64,11 +164,15 @@ router.post('/verify', async (req, res) => {
     if (wordle_info.length) {
         wordle = wordle_info[0].wordle
     } else {
+        const url = "https://api.wordnik.com/v4/words.json/randomWord?hasDictionaryDef=true&maxCorpusCount=-1&minDictionaryCount=1&maxDictionaryCount=-1&minLength=5&maxLength=5&api_key=" + process.env.WORDNIK_API
+
+        const result = await axios.get(url)
+
+        wordle = result.data.word.toUpperCase()
+        
         await Wordle.create({
-            wordle: 'PIZZA',
-            updated: updated
+            wordle, updated
         })
-        wordle = 'PIZZA'
     }
 
     let message
