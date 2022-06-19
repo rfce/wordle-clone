@@ -190,7 +190,7 @@ body {
     background-color: var(--color-correct) !important;
 }
 
-.instructions-container {
+.splash-screen {
     position: absolute;
     top: 0px;
     left: 0px;
