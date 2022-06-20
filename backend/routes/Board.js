@@ -1,5 +1,6 @@
 const User = require('../models/User')
 const Wordle = require('../models/Wordle')
+const wordlist = require('../data/words.json')
 
 const axios = require('axios')
 const express = require('express')
@@ -117,6 +118,7 @@ router.post('/verify', async (req, res) => {
     if (client_data.id === undefined) {
         return res.status(400).json({
             success: false,
+            code: 5101,
             message: 'User-id is required'
         })
     }
@@ -125,6 +127,7 @@ router.post('/verify', async (req, res) => {
     if (!Array.isArray(client_data.row) || client_data.row.length !== 5) {
         return res.status(400).json({
             success: false,
+            code: 5102,
             message: 'Invalid data. Wordle to check is missing.'
         })
     }
@@ -137,6 +140,7 @@ router.post('/verify', async (req, res) => {
     if (user_data.length == 0) {
         return res.status(400).json({
             success: false,
+            code: 5103,
             message: 'Invalid user-id. Please visit /register to get id.'
         })
     }
@@ -145,7 +149,17 @@ router.post('/verify', async (req, res) => {
     const prev_board = user_data[0].board
     const prev_state = user_data[0].state
 
-    let wordle
+    const user_guess = client_data.row.join('').toLowerCase()
+    
+    // Check if user guess is a dictionary word
+    if (wordlist[user_guess[0]].includes(user_guess) == false) {
+        return res.json({
+            success: false,
+            code: 5104,
+            message: 'Please enter a valid dictionary word.',
+            id: user_id
+        })
+    }
 
     // June 30, 2022
     const today  = new Date()
@@ -154,6 +168,8 @@ router.post('/verify', async (req, res) => {
         month: 'long',
         day: 'numeric'
     })
+
+    let wordle
 
     // Get today's wordle
     const wordle_info = await Wordle.find({
@@ -199,6 +215,7 @@ router.post('/verify', async (req, res) => {
         if (prev_state == 'won' || prev_state == 'lose') {
             return res.json({
                 success: false,
+                code: 5105,
                 message: 'Game over - new wordle will be available tomorrow',
                 id: user_id,
                 board: prev_board,
@@ -233,6 +250,7 @@ router.post('/verify', async (req, res) => {
 
             res.json({
                 success: true,
+                code: 5106,
                 message: message,
                 id: user_id,
                 board: prev_board,
@@ -266,6 +284,7 @@ router.post('/verify', async (req, res) => {
 
         res.json({
             success: true,
+            code: 5107,
             message: message,
             id: user_id,
             board: current_board,

@@ -196,6 +196,21 @@ async function clicked(key) {
 
             const data = await response.json()
 
+            if (data.success == false) {
+                // User guess isn't valid dictionary word
+                if (data.code == 5104) {
+                    display_message('Please enter a valid word')
+    
+                    line.classList.add('animate-shake')
+                    setTimeout(() => {
+                        line.classList.remove('animate-shake')
+                    }, 650)
+                } else {
+                    display_message('Something went wrong')
+                }
+                return
+            }
+
             for (let i = 0; i < 5; i++) {
                 const cell = document.getElementById('grid-column-' + current_row + '-row-' + i)
 

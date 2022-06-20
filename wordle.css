@@ -22,6 +22,15 @@ body {
     animation-duration: 100ms;
 }
 
+.animate-shake {
+    animation-name: shake;
+    animation-duration: 600ms;
+}
+
+.animate-shake > div {
+    border-color: rgb(254, 202, 202) !important;
+}
+
 .animate-bounce {
     animation-name: bounce !important;
     animation-duration: 1000ms !important;
@@ -144,7 +153,13 @@ body {
 
 .keyboard button {
     all: unset;
+    box-sizing: border-box;
     padding: 8px 14px;
+    min-width: 45px;
+    min-height: 45px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     background-color: white;
     font-family: 'Roboto', sans-serif;
     font-weight: bold;
@@ -327,7 +342,7 @@ body {
     }
 }
 
-@keyframes Shake {
+@keyframes shake {
     10%, 90% {
         transform: translateX(-1px);
     }

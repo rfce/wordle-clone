@@ -11,6 +11,9 @@ dotenv.config()
 const port = process.env.PORT
 const MONGO_URI = process.env.MONGO_URI
 
+// Client's ip is derived from the x-forwarded-for header
+app.set('trust proxy', true)
+
 app.use(express.json())
 
 app.use(express.urlencoded({
