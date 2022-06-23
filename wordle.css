@@ -5,10 +5,26 @@
     src: url("assets/fonts/karnakcondensed.woff2") format('woff2');
 }
 
-:root {
+.light-theme {
+    --primary-text: black;
+    --text-color: rgb(51, 65, 85);
+    --border-color: rgb(211, 214, 218);
+    --background: white;
+    --hover-background: rgb(192, 132, 252);
     --color-correct: rgb(106, 170, 100);
     --color-present: rgb(201, 180, 88);
     --color-absent: rgb(120, 124, 126);
+}
+
+.dark-theme {
+    --primary-text: white;
+    --text-color: white;
+    --border-color: rgb(58, 58, 60);
+    --background: rgb(18, 18, 19);
+    --hover-background: rgb(226, 232, 240);
+    --color-correct: rgb(83, 141, 78);
+    --color-present: rgb(181, 159, 59);
+    --color-absent: rgb(58, 58, 60);
 }
 
 body {
@@ -40,18 +56,25 @@ body {
     position: relative;
     display: flex;
     flex-direction: column;
-    background-color: white;
+    background-color: var(--background);
+    height: 100vh;
+    transition: background-color 0.4s ease;
 }
 
 .header {
     height: 50px;
-    background-color: white;
-    border-bottom: 1px solid rgb(211, 214, 218);
+    color: var(--primary-text);
+    background-color: var(--background);
+    border-bottom: 1px solid var(--border-color);
     display: flex;
     align-items: center;
     justify-content: space-between;
     padding-left: 20px;
     padding-right: 20px;
+}
+
+.header svg {
+    fill: var(--primary-text);
 }
 
 .header h4 {
@@ -67,15 +90,55 @@ body {
     gap: 8px;
 }
 
+.theme {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.theme > h5 {
+    all: unset;
+    font-size: 12px;
+    font-weight: 500;
+}
+
+.theme-switch {
+    position: relative;
+    cursor: pointer;
+    background-color: rgb(135, 138, 140);
+    width: 32px;
+    height: 20px;
+    border-radius: 16px;
+}
+
+.knob {
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    width: 50%;
+    height: calc(100% - 4px);
+    background-color: white;
+    border-radius: 8px;
+    transition: transform 0.3s ease;
+}
+
+.theme-switch.checked {
+    background-color: var(--color-correct);
+}
+
+.theme-switch.checked .knob {
+    transform: translateX(calc(100% - 4px));
+}
+
 #message {
     position: absolute;
     top: 60px;
     right: 10px;
     opacity: 0;
     padding: 15px 25px;
-    color: #334155;
+    color: var(--text-color);
     font-size: 12px;
-    background-color: white;
+    background-color: var(--background);
     border-radius: 4px;
     box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;
     transition: opacity 300ms ease;
@@ -97,7 +160,7 @@ body {
 .grid > div div {
     height: 9vh;
     width: 9vh;
-    border: 2px solid #d3d6da;
+    border: 2px solid var(--border-color);
     box-sizing: border-box;
     display: flex;
     justify-content: center;
@@ -105,8 +168,8 @@ body {
     font-size: 4.5vh;
     font-family: 'Roboto', sans-serif;
     font-weight: 700;
-    color: #334155;
-    background-color: white;
+    color: var(--text-color);
+    background-color: var(--background);
 }
 
 .dashed-box {
@@ -114,7 +177,7 @@ body {
 }
 
 .complete-row div {
-    color: white !important;
+    color: var(--background) !important;
     border: 2px solid #c084fc !important;
     background-color: #a855f7 !important;
 }
@@ -160,18 +223,19 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-    background-color: white;
+    background-color: var(--background);
     font-family: 'Roboto', sans-serif;
     font-weight: bold;
-    color: #334155;
+    color: var(--text-color);
     border-radius: 4px;
     border: 3px solid transparent;
     box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
 }
 
 .keyboard button:hover {
-    background-color: #e2e8f0;
-    border: 3px solid #e2e8f0;
+    color: var(--background);
+    background-color: var(--hover-background);
+    border: 3px solid var(--hover-background);
     cursor: pointer;
     box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 3px, rgba(0, 0, 0, 0.24) 0px 1px 2px;
 }
@@ -191,17 +255,17 @@ body {
 }
 
 .keyboard-grey {
-    color: white !important;
+    color: var(--background) !important;
     background-color: var(--color-absent) !important;
 }
 
 .keyboard-yellow {
-    color: white !important;
+    color: var(--background) !important;
     background-color: var(--color-present) !important;
 }
 
 .keyboard-green {
-    color: white !important;
+    color: var(--background) !important;
     background-color: var(--color-correct) !important;
 }
 
@@ -223,7 +287,8 @@ body {
     font-size: 14px;
     border-radius: 8px;
     border: 1px solid rgb(246, 247, 248);
-    background-color: white;
+    color: var(--primary-text);
+    background-color: var(--background);
     box-shadow: 0 4px 23px 0 rgb(0 0 0 / 20%);
     max-width: 500px;
     max-height: 90%;
@@ -240,12 +305,13 @@ body {
 }
 
 .close-icon svg {
+    fill: var(--primary-text);
     position: fixed;
 }
 
 .instructions .examples {
-    border-top: 1px solid rgb(211, 214, 218);
-    border-bottom: 1px solid rgb(211, 214, 218);
+    border-top: 1px solid var(--border-color);
+    border-bottom: 1px solid var(--border-color);
 }
 
 .examples .example {
@@ -271,24 +337,77 @@ body {
 }
 
 .example-row .example-correct {
-    color: white;
+    color: var(--background);
     border-color: var(--color-correct);
     background-color: var(--color-correct);
     animation: 500ms flip ease-in;
 }
 
 .example-row .example-present {
-    color: white;
+    color: var(--background);
     border-color: var(--color-present);
     background-color: var(--color-present);
     animation: 500ms flip ease-in;
 }
 
 .example-row .example-absent {
-    color: white;
+    color: var(--background);
     border-color: var(--color-absent);
     background-color: var(--color-absent);
     animation: 500ms flip ease-in;
+}
+
+@media screen and (max-width: 480px) {
+    .container {
+        justify-content: space-between;
+    }
+
+    .theme > h5 {
+        display: none;
+    }
+
+    .grid > div div {
+        height: 8vh;
+        width: 8vh;
+    }
+
+    .keyboard {
+        width: 100vw;
+        gap: 2px;
+        margin-bottom: 8vh;
+    }
+
+    .keyboard button {
+        padding: 2px 6px;
+        min-width: 7.7vw;
+        min-height: 7.7vw;
+        box-shadow: none;
+        border: 1px solid var(--text-color);
+    }
+
+    .keyboard button:nth-child(11) {
+        font-size: 8px;
+    }
+    
+    .keyboard button:nth-child(12) {
+        margin-left: 6vw;
+    }
+
+    .keyboard button:nth-child(21) {
+        font-size: 8px;
+        margin-right: 6vw;
+    }
+
+    .keyboard button:hover{
+        color: var(--text-color);
+        background-color: var(--background);
+        border: 1px solid var(--text-color);
+        box-shadow: none;
+    }
+
+    .keyboard button:active {
+        background-color: var(--hover-background);
+    }
 }
 
 @keyframes pop {

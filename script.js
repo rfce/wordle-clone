@@ -316,3 +316,30 @@ splash.addEventListener('click', () => {
 })
 
 createKeyboard()
+
+const container = document.querySelector('.container')
+const toggle = document.querySelector('.theme-switch')
+
+const theme = localStorage.getItem('theme')
+
+// Set theme on initial page load
+if (theme == 'dark') {
+    container.classList.remove('light-theme')
+    container.classList.add('dark-theme')
+    toggle.classList.add('checked')
+}
+
+// Toggle theme
+toggle.addEventListener('click', () => {
+    toggle.classList.toggle('checked')
+    container.classList.toggle('light-theme')
+    container.classList.toggle('dark-theme')
+
+    const current_theme = localStorage.getItem('theme')
+
+    if (current_theme == 'dark') {
+        localStorage.setItem('theme', 'light')
+    } else {
+        localStorage.setItem('theme', 'dark')
+    }
+})
