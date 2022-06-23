@@ -374,7 +374,7 @@ body {
     .keyboard {
         width: 100vw;
         gap: 2px;
-        margin-bottom: 8vh;
+        margin-bottom: 10vh;
     }
 
     .keyboard button {
@@ -383,6 +383,7 @@ body {
         min-height: 7.7vw;
         box-shadow: none;
         border: 1px solid var(--text-color);
+        user-select: none;
     }
 
     .keyboard button:nth-child(11) {
