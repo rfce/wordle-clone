@@ -1,5 +1,5 @@
 // Deploy backend and add url here
-const backend = "https://backend-wordle.herokuapp.com"
+const backend = "https://wordle-backend.onrender.com"
 
 let state = "running"
 let board = Array(6).fill(Array(5).fill(''))
