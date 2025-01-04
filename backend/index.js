@@ -4,6 +4,7 @@ const boardRoute = require('./routes/Board')
 const express = require('express')
 const app = express()
 const mongoose = require('mongoose')
+const cron = require('node-cron')
 const cors = require('cors')
 const dotenv = require('dotenv')
 dotenv.config()
@@ -30,6 +31,12 @@ app.use('/board', boardRoute)
 mongoose.connect(MONGO_URI).catch((error) => {
     console.log('[-] Error connecting to database - index.js')
     console.log(error)
+})
+
+// Schedule a task to run every 2 minutes
+cron.schedule('*/2 * * * *', () => {
+    const timestamp = new Date().toISOString()
+    console.log(timestamp)
 })
 
 app.listen(port, () => {
