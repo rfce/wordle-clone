@@ -21,8 +21,17 @@ app.use(express.urlencoded({
     extended: false
 }))
 
+const whitelist = ['http://localhost:3000', 'http://127.0.0.1:5500', 'undefined', process.env.ORIGIN]
+
 app.use(cors({
-    origin: process.env.ORIGIN
+    origin: (origin, callback) => {
+        if (whitelist.some(item => String(origin) == item)) {
+            callback(null, true)
+        } else {
+            callback(new Error('Not allowed by cors'))
+        }
+    },
+    optionsSuccessStatus: 200
 }))
 
 app.use('/', authRoute)

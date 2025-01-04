@@ -1,5 +1,5 @@
 // Deploy backend and add url here
-const backend = "https://wordle-backend.onrender.com"
+const backend = "https://wordle-clone-52hl.onrender.com"
 
 let state = "running"
 let board = Array(6).fill(Array(5).fill(''))
