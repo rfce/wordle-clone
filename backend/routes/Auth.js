@@ -4,6 +4,13 @@ const router = express.Router()
 
 const User = require('../models/User')
 
+router.get('/keep-alive', async (req, res) => {
+    res.json({
+        success: true,
+        message: "✅ Live"
+    })
+})
+
 // @route - /register
 // @method - get
 // @function - register a new user in database
